@@ -8,11 +8,11 @@ const webcamElement = document.getElementById('webcam');
 let net;
 const classifier = knnClassifier.create();
 
-async function app() {
-  try {
-  console.log('Loading mobilenet...');
 
-  //Load the model.
+async function app() {
+  console.log('Loading mobilenet..');
+
+  // Load the model
   net = await mobilenet.load();
   console.log('Successfully loaded model');
 
@@ -20,53 +20,118 @@ async function app() {
   // from the web camera as Tensor.
   const webcam = await tf.data.webcam(webcamElement);
 
-
-  //Reads an image from the webcam and associates it with a specific class index
+  // Reads an image from the webcam and associates it with a specific class
+  // index.
   const addExample = async classId => {
+    // Capture an image from the web camera.
     const img = await webcam.capture();
 
     // Get the intermediate activation of MobileNet 'conv_preds' and pass that
     // to the KNN classifier.
     const activation = net.infer(img, true);
 
-    //Get the intermediate activation to the classifier.
-    classifier.addExample(activation, classId)
+    // Pass the intermediate activation to the classifier.
+    classifier.addExample(activation, classId);
 
     // Dispose the tensor to release the memory.
     img.dispose();
-  }
+  };
+
   // When clicking a button, add an example for that class.
   document.getElementById('class-a').addEventListener('click', () => addExample(0));
   document.getElementById('class-b').addEventListener('click', () => addExample(1));
   document.getElementById('class-c').addEventListener('click', () => addExample(2));
 
-  while(true) {
-    const img = await webcam.capture();
-    const result = await net.classify(img);
+  while (true) {
+    if (classifier.getNumClasses() > 0) {
+      const img = await webcam.capture();
 
-    document.getElementById('console').innerText = `
-    prediction: ${result[0].className}\n
-    probability: ${result[0].probability}
-    `;
-    // Dispose the tensor to releas
-    img.dispose();// net = await mobilenet.load();
-    // console.log('Successfully loaded model');
+      // Get the activation from mobilenet from the webcam.
+      const activation = net.infer(img, 'conv_preds');
+      // Get the most likely class and confidence from the classifier module.
+      const result = await classifier.predictClass(activation);
 
-    // Give some breathing room by waiting for the next animation frame to
-    // fire.
+      const classes = ['A', 'B', 'C'];
+      document.getElementById('console').innerText = `
+        prediction: ${classes[result.label]}\n
+        probability: ${result.confidences[result.label]}
+      `;
+
+      // Dispose the tensor to release the memory.
+      img.dispose();
+    }
+
     await tf.nextFrame();
-
   }
-  //Make a prdiction through the model on our image.
-  // const imgEl = document.getElementById('img');
-  // const result = await net.classify(imgEl);
-
-  console.log(result);
-  } catch (error) {
-    console.log(error);
-  }
-
 }
+
+
+
+// async function app() {
+//   try {
+//   console.log('Loading mobilenet...');
+
+//   //Load the model.
+//   net = await mobilenet.load();
+//   console.log('Successfully loaded model');
+
+//   // Create an object from Tensorflow.js data API which could capture image
+//   // from the web camera as Tensor.
+//   const webcam = await tf.data.webcam(webcamElement);
+
+
+//   //Reads an image from the webcam and associates it with a specific class index
+//   const addExample = async classId => {
+//     const img = await webcam.capture();
+
+//     // Get the intermediate activation of MobileNet 'conv_preds' and pass that
+//     // to the KNN classifier.
+//     const activation = net.infer(img, true);
+
+//     //Get the intermediate activation to the classifier.
+//     classifier.addExample(activation, classId)
+//     //console.log(classifier);
+//     // Dispose the tensor to release the memory.
+//     img.dispose();
+//   }
+//   // When clicking a button, add an example for that class.
+//   document.getElementById('class-a').addEventListener('click', () => addExample(0));
+//   document.getElementById('class-b').addEventListener('click', () => addExample(1));
+//   document.getElementById('class-c').addEventListener('click', () => addExample(2));
+
+//   while(true) {
+//     if (classifier.getNumClasses() > 0) {
+//       const img = await webcam.capture();
+
+//       const activation = net.infer(img, 'conv_preds');
+
+//       const result = await classifier.predictClass(activation);
+
+//       const classes = ['A', 'B', 'C'];
+//       document.getElementById('console').innerText = `
+//         prediction: ${classes[result.label]}\n
+//         probability: ${result.confidences[result.label]}
+//       `;
+
+//       // Dispose the tensor to release the memory
+//       img.dispose();// net = await mobilenet.load();
+//       // console.log('Successfully loaded model');
+
+//       // Give some breathing room by waiting for the next animation frame to
+//       // fire.
+
+//     }
+//     await tf.nextFrame();
+//   }
+//   //Make a prdiction through the model on our image.
+//   // const imgEl = document.getElementById('img');
+//   // const result = await net.classify(imgEl);
+//   // console.log(result);
+//   } catch (error) {
+//     console.log(error);
+//   }
+
+// }
 
 app();
 console.log('Testing?')
