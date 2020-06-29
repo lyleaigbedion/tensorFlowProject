@@ -1,0 +1,161 @@
+
+html,
+body{
+    height: 100%;
+}
+
+
+body {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizelegibility;
+    color: #000000;
+}
+
+h1,h3,h4,h5 {
+    color: #000000;
+
+}
+h2 {
+    color: black;
+}
+
+h6 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.8rem;
+    letter-spacing: 0.1rem;
+}
+
+img {
+    max-width: 100%;
+}
+
+.blockquote {
+    font-size: 1.6rem;
+    color: #333;
+    border: none;
+    padding: 0;
+}
+
+.blockquote-footer {
+    margin: 1rem 0 0;
+}
+
+#stage {
+    background: url('dist/superMario.png') center center no-repeat;
+    background-size: cover;
+    color: white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#stage-caption {
+    font-size: 1.4rem;
+    font-weight: 200;
+    max-width: 60rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#stage-caption h1 {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.feature-content {
+    padding: 8rem 0;
+    overflow: hidden;
+
+}
+
+.feature-content img {
+    margin-bottom: -8rem;
+}
+
+
+.feature-content2 {
+    padding: 10rem 0;
+    overflow: hidden;
+}
+
+
+.feature-content2 img {
+    margin-bottom: 1rem;
+}
+
+.feature-dark {
+    background: #234766;
+    color: white;
+}
+
+.feature-dark h2 {
+    color: white;
+}
+
+.feature1 {
+    background: #b2d9db;
+}
+
+.feature3 {
+    background: #F0EAEA;
+}
+
+#feature-three {
+   background: url('img/luke.jpg') center center no-repeat;
+    background-size: cover;
+    color: white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+}
+
+.feature-content{
+    padding: 5;
+}
+
+#feature-four .feature-content {
+    padding: 5;
+}
+
+#feature-four img{
+     margin-bottom: 1rem;
+}
+
+#feature-five img {
+    margin-top: 2rem;
+}
+
+#feature-six img{
+     margin-bottom: 0.5rem;
+}
+#main-footer {
+    background: #262F36;
+    color: white;
+    padding: 6rem 0;
+    font-size: 0.8rem;
+}
+
+#main-footer h6 {
+    color: #718FA9;
+}
+
+#main-footer a {
+    color: #6C6F73;
+}
+
+
+/* Media Queries */
+
+@media screen and ( min-width : 991px ) {
+
+    .feature-content {
+        display: flex;
+        align-items: center;
+    }
+
+}

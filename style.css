@@ -16,18 +16,19 @@ button {
   text-align: center;
   cursor: pointer;
   user-select: none;
+  /* position: absolute;
+  left: 50%;
+  margin-left: -50px;
+  top: 50%;
+  margin-top: -50px;*/
 }
 
 button:hover {
-box-shadow: 0 1px 1px
-rgba(0,0,0,0.1);
+box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 background-image: linear-gradient(top,#f8f8f8,#f1f1f1);
-background-color:
-#f8f8f8;
-border: 1px solid
-#c6c6c6;
-color:
-#222;
+background-color: #f8f8f8;
+border: 1px solid #c6c6c6;
+color: #222;
 }
 
 button:focus {
@@ -35,3 +36,13 @@ button:focus {
   #4d90fe;
   outline: none;
 }
+
+canvas {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 800px;
+}
+

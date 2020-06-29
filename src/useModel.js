@@ -6,6 +6,7 @@ let classifier
 let video;
 let label = 'Loading Model';
 let findBtn
+const dontFire = ['Not a game', 'Model Ready','Loading Model']
 
 //Helper functions
 function modelReady() {
@@ -31,7 +32,7 @@ function gotResults(error, results){
   } else {
 
     label = results[0].label
-    console.log(results)
+    //console.log(results)
     //let prob = results[0].confidence;
     classifier.classify(gotResults)
   }
@@ -47,9 +48,18 @@ function setup() {
   mobilenet = ml5.featureExtractor('MobileNet',modelReady);
   classifier = mobilenet.classification(video, { numLabels:4 }, videoReady);///ADD OPTIONS HERE TO CHANGE LABEL SIZE!!!!
 
-  findBtn = createButton('Find');
+  findBtn = createButton('Generate');
   findBtn.mousePressed(function(){
-    console.log(label);
+    if(label === 'Mario 64'){
+      console.log(label);
+      window.open('/mario.html');
+    }
+    else if(label != 'Mario 64' && label !== "Not a game"){
+      console.log(label);
+      window.open(`http://google.com/search?q=${label}`);
+    }
+
+
   });
 }
 //rendering
@@ -58,5 +68,5 @@ function draw() {
   image(video,0,0,320,240);
   fill(255);
   textSize(16);
-  text(label, 10, height - 15);
+  text(label, 10, height - 10);
 }
